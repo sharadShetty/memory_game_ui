@@ -1,20 +1,28 @@
 import React from 'react';
-import { Button, Layout } from 'antd';
+import { Layout } from 'antd';
 import styled from 'styled-components';
+import HeaderBar from './components/HeaderBar';
+import Board from './components/Board';
 import './App.css';
 
-const { Header, Content } = Layout;
+const { Header: AntdHeader, Content } = Layout;
 
 const Wrapper = styled(Layout)`
   height: 100%;
 `;
 
+const Header = styled(AntdHeader)`
+  height: auto;
+`;
+
 const App = () => (
   <div className="App">
     <Wrapper>
-      <Header>Header</Header>
+      <Header>
+        <HeaderBar />
+      </Header>
       <Content>
-        <Button type="primary">Button</Button>
+        <Board />
       </Content>
     </Wrapper>
   </div>
