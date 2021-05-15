@@ -1,5 +1,5 @@
-import React from 'react';
-import { Layout } from 'antd';
+import React, { useState } from 'react';
+import { Layout, Spin } from 'antd';
 import styled from 'styled-components';
 import HeaderBar from './components/HeaderBar';
 import Board from './components/Board';
@@ -15,17 +15,22 @@ const Header = styled(AntdHeader)`
   height: auto;
 `;
 
-const App = () => (
-  <div className="App">
-    <Wrapper>
-      <Header>
-        <HeaderBar />
-      </Header>
-      <Content>
-        <Board />
-      </Content>
-    </Wrapper>
-  </div>
-);
+const App = () => {
+  const [isLoading, setIsLoading] = useState(false);
 
+  return (
+    <div className="App">
+      <Spin spinning={isLoading} tip="Please wait...">
+        <Wrapper>
+          <Header>
+            <HeaderBar setIsLoading={setIsLoading} />
+          </Header>
+          <Content>
+            <Board setIsLoading={setIsLoading} />
+          </Content>
+        </Wrapper>
+      </Spin>
+    </div>
+  );
+};
 export default App;

@@ -11,3 +11,12 @@ html,
 .App {
   text-align: center;
 }
+.App .ant-spin-nested-loading {
+  height: 100%;
+}
+.App .ant-spin-nested-loading .ant-spin-container {
+  height: 100%;
+}
+.ant-spin-nested-loading > div > .ant-spin {
+  max-height: none !important;
+}
