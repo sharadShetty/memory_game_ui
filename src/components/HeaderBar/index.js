@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { PageHeader, Row, Col } from 'antd';
 import HeaderTag from './partials/HeaderTag';
@@ -14,7 +14,28 @@ const StyledPageHeader = styled(PageHeader)`
   }
 `;
 
-const HeaderBar = ({ errorScore }) => {
+const calculateElapsedTime = (startTime, currentTime) => {
+  if (!startTime) return '00:00';
+  const timeDifference = (currentTime - startTime) / 1000;
+  const seconds = toTwoDigits(Math.floor(timeDifference % 60));
+  const minutes = toTwoDigits(Math.floor(timeDifference / 60));
+  return minutes + '.' + seconds;
+};
+
+const toTwoDigits = (number) => {
+  let value = number + '';
+  return value.length === 1 ? '0' + value : value;
+};
+
+const HeaderBar = ({ errorScore, startTime }) => {
+  const [currentTime, setCurrentTime] = useState(Date.now());
+
+  useEffect(() => {
+    setTimeout(() => {
+      setCurrentTime(Date.now());
+    }, 1000);
+  }, [currentTime]);
+
   return (
     <Wrapper>
       <StyledPageHeader
@@ -27,7 +48,11 @@ const HeaderBar = ({ errorScore }) => {
             align="middle"
           >
             <Col>
-              <HeaderTag label="Elapsed Time" value={13.28} color="#87d068" />
+              <HeaderTag
+                label="Elapsed Time"
+                value={calculateElapsedTime(startTime, currentTime)}
+                color="#87d068"
+              />
             </Col>
             <Col>
               <HeaderTag

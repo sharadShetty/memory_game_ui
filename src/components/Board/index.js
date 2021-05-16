@@ -94,7 +94,10 @@ const Board = ({
           if (data.completedAt) {
             setGameOver(true);
             setFinalScore(data.score);
-            setNoOfCardsPerSet(null);
+            setTimeout(() => {
+              setNoOfCardsPerSet(null);
+              setStartTime('');
+            }, 3000);
           } else {
             setTimeout(() => {
               setCardsToHide(data.cardsToHide);

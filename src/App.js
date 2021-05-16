@@ -29,12 +29,7 @@ const App = () => {
       <Spin spinning={isLoading} tip="Please wait...">
         <Wrapper>
           <Header>
-            <HeaderBar
-              setIsLoading={setIsLoading}
-              fileId={fileId}
-              startTime={startTime}
-              errorScore={errorScore}
-            />
+            <HeaderBar startTime={startTime} errorScore={errorScore} />
           </Header>
           <Content>
             <Board

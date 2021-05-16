@@ -16,7 +16,9 @@ const GameOverModal = ({ visible, restart, score }) => {
         </Button>,
       ]}
     >
-      <Text type="success">Your score is {score}</Text>
+      <Text type="success" strong>
+        Your score is {score}
+      </Text>
     </AntdModal>
   );
 };
