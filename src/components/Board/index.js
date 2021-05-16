@@ -15,10 +15,13 @@ const Board = ({
   setFileId,
   noOfCardsPerSet,
   setNoOfCardsPerSet,
+  startTime,
+  setStartTime,
 }) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [gameDifficulty, setGameDifficulty] = useState('');
-  const [chosenFirstCard, setChosenFirstCard] = useState(null);
+  const [chosenFirstCardNum, setChosenFirstCardNum] = useState(null);
+  const [chosenFirstCardColor, setChosenFirstCardColor] = useState('');
 
   useEffect(() => {
     setIsModalVisible(true);
@@ -43,10 +46,36 @@ const Board = ({
     setIsLoading(false);
   };
 
+  const cardSelection = async (set, cardNum) => {
+    try {
+      setIsLoading(true);
+      const { status, data } = await request.post(`/card/selection`, {
+        set,
+        cardNum,
+        fileId,
+      });
+      if (status === 200) {
+        if (set === 1) {
+          setChosenFirstCardColor(data.color);
+          setChosenFirstCardNum(cardNum);
+        }
+        if (!startTime) {
+          setStartTime(data.startedAt);
+        }
+      } else {
+        message.error('Could not select the card');
+      }
+    } catch (err) {
+      message.error('Could not select the card');
+    }
+    setIsLoading(false);
+  };
+
   const handleCardClick = (set, cardNum) => {
     if (set === 1) {
-      setChosenFirstCard(cardNum);
-    } else if (set === 2 && !chosenFirstCard) {
+      setChosenFirstCardColor('');
+      cardSelection(set, cardNum);
+    } else if (set === 2 && !chosenFirstCardNum) {
       message.warning('Please chose a card from first group');
     }
   };
@@ -60,7 +89,12 @@ const Board = ({
             set={set}
             cardNum={i + 1}
             handleCardClick={handleCardClick}
-            hoverable={!(!chosenFirstCard && set === 2)}
+            hoverable={!(!chosenFirstCardNum && set === 2)}
+            color={
+              set === 1 && i + 1 === chosenFirstCardNum
+                ? chosenFirstCardColor
+                : ''
+            }
           />
         </Col>
       );

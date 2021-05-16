@@ -19,13 +19,18 @@ const App = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [fileId, setFileId] = useState(null);
   const [noOfCardsPerSet, setNoOfCardsPerSet] = useState(null);
+  const [startTime, setStartTime] = useState(null);
 
   return (
     <div className="App">
       <Spin spinning={isLoading} tip="Please wait...">
         <Wrapper>
           <Header>
-            <HeaderBar setIsLoading={setIsLoading} fileId={fileId} />
+            <HeaderBar
+              setIsLoading={setIsLoading}
+              fileId={fileId}
+              startTime={startTime}
+            />
           </Header>
           <Content>
             <Board
@@ -34,6 +39,8 @@ const App = () => {
               setFileId={setFileId}
               noOfCardsPerSet={noOfCardsPerSet}
               setNoOfCardsPerSet={setNoOfCardsPerSet}
+              startTime={startTime}
+              setStartTime={setStartTime}
             />
           </Content>
         </Wrapper>

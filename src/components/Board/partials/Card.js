@@ -10,7 +10,6 @@ const StyledAntdCard = styled(AntdCard)`
 `;
 
 const Card = ({
-  show = false,
   color,
   hide = false,
   set,
@@ -23,7 +22,7 @@ const Card = ({
       hide={hide}
       hoverable={hoverable}
       bodyStyle={{
-        backgroundColor: show ? color : '#fff',
+        backgroundColor: color ? color : '#fff',
         height: '100%',
       }}
       onClick={() => handleCardClick(set, cardNum)}
