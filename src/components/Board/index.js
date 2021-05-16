@@ -21,6 +21,8 @@ const Board = ({
   setErrorScore,
   gameOver,
   setGameOver,
+  finalScore,
+  setFinalScore,
 }) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [gameDifficulty, setGameDifficulty] = useState('');
@@ -91,6 +93,8 @@ const Board = ({
           setErrorScore(data.errorScore);
           if (data.completedAt) {
             setGameOver(true);
+            setFinalScore(data.score);
+            setNoOfCardsPerSet(null);
           } else {
             setTimeout(() => {
               setCardsToHide(data.cardsToHide);
@@ -153,7 +157,7 @@ const Board = ({
       <Wrapper align="middle" justify="center">
         {noOfCardsPerSet && getCards(1)}
       </Wrapper>
-      <Divider>***</Divider>
+      {noOfCardsPerSet && <Divider>***</Divider>}
       <Wrapper align="middle" justify="center">
         {noOfCardsPerSet && getCards(2)}
       </Wrapper>
@@ -163,7 +167,11 @@ const Board = ({
         onChange={setGameDifficulty}
         onSubmit={startGame}
       />
-      <GameOverModal visible={gameOver} restart={restartGame} />
+      <GameOverModal
+        visible={gameOver}
+        restart={restartGame}
+        score={finalScore}
+      />
     </>
   );
 };

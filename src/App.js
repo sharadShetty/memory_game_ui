@@ -22,6 +22,7 @@ const App = () => {
   const [startTime, setStartTime] = useState(null);
   const [errorScore, setErrorScore] = useState(0);
   const [gameOver, setGameOver] = useState(false);
+  const [finalScore, setFinalScore] = useState('');
 
   return (
     <div className="App">
@@ -47,6 +48,8 @@ const App = () => {
               setErrorScore={setErrorScore}
               gameOver={gameOver}
               setGameOver={setGameOver}
+              finalScore={finalScore}
+              setFinalScore={setFinalScore}
             />
           </Content>
         </Wrapper>
