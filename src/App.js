@@ -20,6 +20,8 @@ const App = () => {
   const [fileId, setFileId] = useState(null);
   const [noOfCardsPerSet, setNoOfCardsPerSet] = useState(null);
   const [startTime, setStartTime] = useState(null);
+  const [errorScore, setErrorScore] = useState(0);
+  const [gameOver, setGameOver] = useState(false);
 
   return (
     <div className="App">
@@ -30,6 +32,7 @@ const App = () => {
               setIsLoading={setIsLoading}
               fileId={fileId}
               startTime={startTime}
+              errorScore={errorScore}
             />
           </Header>
           <Content>
@@ -41,6 +44,9 @@ const App = () => {
               setNoOfCardsPerSet={setNoOfCardsPerSet}
               startTime={startTime}
               setStartTime={setStartTime}
+              setErrorScore={setErrorScore}
+              gameOver={gameOver}
+              setGameOver={setGameOver}
             />
           </Content>
         </Wrapper>

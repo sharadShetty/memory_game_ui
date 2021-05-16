@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { Row, Col, message, Divider } from 'antd';
-import Modal from './partials/Modal';
+import GameStartModal from './partials/GameStartModal';
+import GameOverModal from './partials/GameOverModal';
 import Card from './partials/Card';
 import request from '../../utils/request';
 
@@ -17,11 +18,20 @@ const Board = ({
   setNoOfCardsPerSet,
   startTime,
   setStartTime,
+  setErrorScore,
+  gameOver,
+  setGameOver,
 }) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [gameDifficulty, setGameDifficulty] = useState('');
   const [chosenFirstCardNum, setChosenFirstCardNum] = useState(null);
   const [chosenFirstCardColor, setChosenFirstCardColor] = useState('');
+  const [chosenSecondCardNum, setChosenSecondCardNum] = useState(null);
+  const [chosenSecondCardColor, setChosenSecondCardColor] = useState('');
+  const [cardsToHide, setCardsToHide] = useState({
+    set1: [],
+    set2: [],
+  });
 
   useEffect(() => {
     setIsModalVisible(true);
@@ -46,6 +56,20 @@ const Board = ({
     setIsLoading(false);
   };
 
+  const restartGame = () => {
+    setGameOver(false);
+    setIsModalVisible(true);
+    setGameDifficulty('');
+    setCardsToHide({
+      set1: [],
+      set2: [],
+    });
+    setChosenFirstCardColor('');
+    setChosenFirstCardNum(null);
+    setChosenSecondCardColor('');
+    setChosenSecondCardNum(null);
+  };
+
   const cardSelection = async (set, cardNum) => {
     try {
       setIsLoading(true);
@@ -58,9 +82,24 @@ const Board = ({
         if (set === 1) {
           setChosenFirstCardColor(data.color);
           setChosenFirstCardNum(cardNum);
-        }
-        if (!startTime) {
-          setStartTime(data.startedAt);
+          if (!startTime) {
+            setStartTime(data.startedAt);
+          }
+        } else {
+          setChosenSecondCardColor(data.color);
+          setChosenSecondCardNum(cardNum);
+          setErrorScore(data.errorScore);
+          if (data.completedAt) {
+            setGameOver(true);
+          } else {
+            setTimeout(() => {
+              setCardsToHide(data.cardsToHide);
+              setChosenFirstCardColor('');
+              setChosenFirstCardNum(null);
+              setChosenSecondCardColor('');
+              setChosenSecondCardNum(null);
+            }, 3000);
+          }
         }
       } else {
         message.error('Could not select the card');
@@ -75,8 +114,12 @@ const Board = ({
     if (set === 1) {
       setChosenFirstCardColor('');
       cardSelection(set, cardNum);
-    } else if (set === 2 && !chosenFirstCardNum) {
-      message.warning('Please chose a card from first group');
+    } else if (set === 2) {
+      if (!chosenFirstCardNum) {
+        message.warning('Please chose a card from first group');
+      } else {
+        cardSelection(set, cardNum);
+      }
     }
   };
 
@@ -93,8 +136,11 @@ const Board = ({
             color={
               set === 1 && i + 1 === chosenFirstCardNum
                 ? chosenFirstCardColor
+                : set === 2 && i + 1 === chosenSecondCardNum
+                ? chosenSecondCardColor
                 : ''
             }
+            hide={cardsToHide['set' + set].includes(i + 1)}
           />
         </Col>
       );
@@ -111,12 +157,13 @@ const Board = ({
       <Wrapper align="middle" justify="center">
         {noOfCardsPerSet && getCards(2)}
       </Wrapper>
-      <Modal
+      <GameStartModal
         visible={isModalVisible}
         value={gameDifficulty}
         onChange={setGameDifficulty}
         onSubmit={startGame}
       />
+      <GameOverModal visible={gameOver} restart={restartGame} />
     </>
   );
 };

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Modal as AntdModal, Button, Radio } from 'antd';
 
-const Modal = ({ visible, value, onChange, onSubmit }) => {
+const GameStartModal = ({ visible, value, onChange, onSubmit }) => {
   return (
     <AntdModal
       visible={visible}
@@ -18,7 +18,7 @@ const Modal = ({ visible, value, onChange, onSubmit }) => {
         </Button>,
       ]}
     >
-      <Radio.Group onChange={(e) => onChange(e.target.value)}>
+      <Radio.Group onChange={(e) => onChange(e.target.value)} value={value}>
         <Radio.Button value="easy">Easy</Radio.Button>
         <Radio.Button value="medium">Medium</Radio.Button>
         <Radio.Button value="hard">Hard</Radio.Button>
@@ -27,4 +27,4 @@ const Modal = ({ visible, value, onChange, onSubmit }) => {
   );
 };
 
-export default Modal;
+export default GameStartModal;

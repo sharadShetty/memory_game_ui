@@ -14,7 +14,7 @@ const StyledPageHeader = styled(PageHeader)`
   }
 `;
 
-const HeaderBar = () => {
+const HeaderBar = ({ errorScore }) => {
   return (
     <Wrapper>
       <StyledPageHeader
@@ -30,7 +30,11 @@ const HeaderBar = () => {
               <HeaderTag label="Elapsed Time" value={13.28} color="#87d068" />
             </Col>
             <Col>
-              <HeaderTag label="Error Score" value={50} color="#2db7f5" />
+              <HeaderTag
+                label="Error Score"
+                value={errorScore}
+                color="#2db7f5"
+              />
             </Col>
             <Col>
               <ResetButton />
