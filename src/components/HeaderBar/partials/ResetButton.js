@@ -3,9 +3,9 @@ import { Button } from 'antd';
 
 import { ReloadOutlined } from '@ant-design/icons';
 
-const ResetButton = () => {
+const ResetButton = ({ ...rest }) => {
   return (
-    <Button type="danger" icon={<ReloadOutlined />}>
+    <Button type="danger" icon={<ReloadOutlined />} {...rest}>
       Reset
     </Button>
   );

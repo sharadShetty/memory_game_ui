@@ -27,7 +27,7 @@ const toTwoDigits = (number) => {
   return value.length === 1 ? '0' + value : value;
 };
 
-const HeaderBar = ({ errorScore, startTime }) => {
+const HeaderBar = ({ errorScore, startTime, restartGame }) => {
   const [currentTime, setCurrentTime] = useState(Date.now());
 
   useEffect(() => {
@@ -62,7 +62,7 @@ const HeaderBar = ({ errorScore, startTime }) => {
               />
             </Col>
             <Col>
-              <ResetButton />
+              <ResetButton onClick={restartGame} />
             </Col>
           </Row>,
         ]}

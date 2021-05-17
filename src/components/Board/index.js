@@ -23,22 +23,22 @@ const Board = ({
   setGameOver,
   finalScore,
   setFinalScore,
+  isGameStartModalVisible,
+  setIsGameStartModalVisible,
+  gameDifficulty,
+  setGameDifficulty,
+  chosenFirstCardNum,
+  setChosenFirstCardNum,
+  chosenFirstCardColor,
+  setChosenFirstCardColor,
+  chosenSecondCardNum,
+  setChosenSecondCardNum,
+  chosenSecondCardColor,
+  setChosenSecondCardColor,
+  cardsToHide,
+  setCardsToHide,
+  restartGame,
 }) => {
-  const [isModalVisible, setIsModalVisible] = useState(false);
-  const [gameDifficulty, setGameDifficulty] = useState('');
-  const [chosenFirstCardNum, setChosenFirstCardNum] = useState(null);
-  const [chosenFirstCardColor, setChosenFirstCardColor] = useState('');
-  const [chosenSecondCardNum, setChosenSecondCardNum] = useState(null);
-  const [chosenSecondCardColor, setChosenSecondCardColor] = useState('');
-  const [cardsToHide, setCardsToHide] = useState({
-    set1: [],
-    set2: [],
-  });
-
-  useEffect(() => {
-    setIsModalVisible(true);
-  }, []);
-
   const startGame = async () => {
     try {
       setIsLoading(true);
@@ -46,7 +46,7 @@ const Board = ({
         difficulty: gameDifficulty,
       });
       if (status === 200) {
-        setIsModalVisible(false);
+        setIsGameStartModalVisible(false);
         setFileId(data.fileId);
         setNoOfCardsPerSet(data.noOfCardsPerSet);
       } else {
@@ -56,20 +56,6 @@ const Board = ({
       message.error('Could not initiate a new game');
     }
     setIsLoading(false);
-  };
-
-  const restartGame = () => {
-    setGameOver(false);
-    setIsModalVisible(true);
-    setGameDifficulty('');
-    setCardsToHide({
-      set1: [],
-      set2: [],
-    });
-    setChosenFirstCardColor('');
-    setChosenFirstCardNum(null);
-    setChosenSecondCardColor('');
-    setChosenSecondCardNum(null);
   };
 
   const cardSelection = async (set, cardNum) => {
@@ -165,7 +151,7 @@ const Board = ({
         {noOfCardsPerSet && getCards(2)}
       </Wrapper>
       <GameStartModal
-        visible={isModalVisible}
+        visible={isGameStartModalVisible}
         value={gameDifficulty}
         onChange={setGameDifficulty}
         onSubmit={startGame}
