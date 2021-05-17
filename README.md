@@ -1,5 +1,15 @@
 ## Memory Game UI
 
+### About
+
+#### Beginning of the game: The player receives two sets of identical cards in random order.
+
+#### Game round: Each round the player lifts two cards from the table. If both cards match - the cards disappear from the table. The player continues to guess card matches until the table is clear.
+
+#### End of the game: The player is rated by the time elapsed from the beginning of the game and the error score.
+
+#
+
 ### Getting started
 
 #### 1. (Optional) Add the env variables by exporting it from your terminal in project directory (or) install [direnv](https://direnv.net/) or your preferred method for env variable management. Create a `.envrc` file and place the following environment variables (may need to run `direnv allow` after changes):
@@ -9,6 +19,10 @@ export REACT_APP_API_BASEURL="http://localhost:3001/"
 #### 2. Run `yarn` to install dependencies
 
 #### 3. Run `yarn start` and open [http://localhost:3000](http://localhost:3000) in your browser.
+
+**Note: This project requires the [memory_game_api](https://github.com/sharadShetty/memory_game_api) for the api and is not independent.**
+
+#
 
 ### Available Scripts
 
