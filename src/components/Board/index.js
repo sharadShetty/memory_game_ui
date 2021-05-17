@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { Row, Col, message, Divider } from 'antd';
 import GameStartModal from './partials/GameStartModal';
@@ -6,7 +6,12 @@ import GameOverModal from './partials/GameOverModal';
 import Card from './partials/Card';
 import request from '../../utils/request';
 
-const Wrapper = styled(Row)`
+const Wrapper = styled.div`
+  padding: 20px 0;
+  height: 100%;
+`;
+
+const CardsContainer = styled(Row)`
   background: transparent;
 `;
 
@@ -142,14 +147,14 @@ const Board = ({
   };
 
   return (
-    <>
-      <Wrapper align="middle" justify="center">
+    <Wrapper>
+      <CardsContainer align="middle" justify="center" gutter={[16, 24]}>
         {noOfCardsPerSet && getCards(1)}
-      </Wrapper>
+      </CardsContainer>
       {noOfCardsPerSet && <Divider>***</Divider>}
-      <Wrapper align="middle" justify="center">
+      <CardsContainer align="middle" justify="center" gutter={[16, 24]}>
         {noOfCardsPerSet && getCards(2)}
-      </Wrapper>
+      </CardsContainer>
       <GameStartModal
         visible={isGameStartModalVisible}
         value={gameDifficulty}
@@ -161,7 +166,7 @@ const Board = ({
         restart={restartGame}
         score={finalScore}
       />
-    </>
+    </Wrapper>
   );
 };
 
