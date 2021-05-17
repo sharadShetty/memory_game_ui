@@ -20,7 +20,7 @@ export REACT_APP_API_BASEURL="http://localhost:3001/"
 
 #### 3. Run `yarn start` and open [http://localhost:3000](http://localhost:3000) in your browser.
 
-**Note: This project requires the [memory_game_api](https://github.com/sharadShetty/memory_game_api) for the api and is not independent.**
+**Note: This project requires the [memory_game_api](https://github.com/sharadShetty/memory_game_api) for the API and is not independent.**
 
 #
 
